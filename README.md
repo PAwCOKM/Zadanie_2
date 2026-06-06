@@ -21,10 +21,12 @@ Zastosowano skaner Trivy (aquasecurity/trivy-action). Wygenerowano obraz lokalny
 
 **a. Tagowanie obrazów aplikacji (GitHub Container Registry - ghcr.io)**
 Wdrożono strategię opartą na akcji docker/metadata-action. Tagowanie sumą kontrolną commita type=sha,format=short otrzymało priorytet 100. Tagowanie Semantic Versioning type=semver,pattern={{version}} otrzymało priorytet 200. Domyślny tag latest wyłączono parametrem flavor: latest=false.
+
 *Uzasadnienie:* Wyłączenie znacznika latest eliminuje modyfikację istniejących obrazów. Skrócony skrót SHA z priorytetem 100 zapewnia identyfikację rewizji kodu (wzorzec GitOps). Schemat semver z priorytetem 200 w pełni nadpisuje domyślny znacznik podczas wyzwalania łańcucha nowym tagiem wydania.
 
 **b. Tagowanie danych cache (DockerHub)**
 Dla warstw pośrednich wyeksportowanych na platformę DockerHub przypisano stały znacznik :cache.
+
 *Uzasadnienie:* Parametr mode=max w silniku Buildkit pozwala na eksport wszystkich warstw budowania. Silnik Buildx nadpisuje wygasłe bloki podczas iteracji. Utrzymanie pojedynczego, stałego znacznika zapobiega gwałtownemu zużyciu przestrzeni magazynowej w rejestrze zewnętrznym i zapewnia nadpisywanie zmodyfikowanych fragmentów cache w obrębie danego wpisu.
 
 
