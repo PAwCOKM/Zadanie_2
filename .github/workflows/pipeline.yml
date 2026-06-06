@@ -1,11 +1,11 @@
 name: CI Pipeline
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
-  tags:
-    - 'v*.*.*'
-  workflow_dispatch:
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build-scan-push:
